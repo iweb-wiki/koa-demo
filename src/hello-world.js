@@ -1,7 +1,8 @@
 const Koa = require('koa');
-const App = new Koa();
+const app = new Koa();
 
-App.use(ctx => {
+app.use(ctx => {
     ctx.body = 'Hello World!';
 })
-App.listen(3000)
+
+module.exports = app;
