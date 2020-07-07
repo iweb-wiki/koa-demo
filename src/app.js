@@ -2,7 +2,7 @@ const Koa = require('koa');
 const app = new Koa();
 
 // logger
-
+// app.use() 返回 this, 因此可以链式表达.
 app.use(async (ctx, next) => {
     await next();
     const rt = ctx.response.get('X-Response-Time');
@@ -10,7 +10,7 @@ app.use(async (ctx, next) => {
 })
 
 // x-reapose-time
-app.use(async (ctx, next) => {
+.use(async (ctx, next) => {
     const start = Date.now();
     await next()
     const ms = Date.now() - start;
@@ -18,8 +18,12 @@ app.use(async (ctx, next) => {
 })
 
 // response
-app.use(async (ctx) => {
+.use(async (ctx) => {
     ctx.body = 'Hello World!';
+})
+
+app.on('error', (err) => {
+    log.error('server error', err)
 })
 
 module.exports = app
